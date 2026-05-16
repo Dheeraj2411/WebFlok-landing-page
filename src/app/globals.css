@@ -1,0 +1,126 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-background: #f8faf9;
+  --color-foreground: #191c1c;
+  
+  --color-primary: #004343;
+  --color-on-primary: #ffffff;
+  --color-primary-container: #0d5c5c;
+  
+  --color-secondary: #006a6a;
+  --color-secondary-container: #9aeeed;
+  --color-on-secondary-container: #006e6e;
+  
+  --color-surface: #f8faf9;
+  --color-on-surface: #191c1c;
+  --color-on-surface-variant: #3f4948;
+  
+  --color-outline: #6f7978;
+  --color-outline-variant: #bec8c8;
+
+  --color-tertiary-fixed-dim: #4fdad9;
+
+  --font-headline: var(--font-playfair), serif;
+  --font-body: var(--font-dm-sans), sans-serif;
+}
+
+:root {
+  --background: #f8faf9;
+  --foreground: #191c1c;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  @apply font-headline tracking-tight;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+  position: relative;
+}
+
+body {
+  @apply bg-background text-foreground font-body antialiased leading-relaxed tracking-tight;
+  scroll-behavior: smooth;
+}
+
+/* Typography Enhancements */
+.text-balance {
+  text-wrap: balance;
+}
+
+::selection {
+  background: rgba(0, 106, 106, 0.15);
+  color: #004343;
+}
+
+.text-gradient {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-primary via-secondary to-primary-container bg-[length:200%_auto] animate-[shimmer_8s_linear_infinite];
+}
+
+@layer components {
+  .service-card-text {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+  }
+  
+  .polaroid-scatter img {
+    border: 8px solid white;
+    box-shadow: 0 4px 12px rgba(13, 92, 92, 0.08);
+  }
+  
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.animate-float {
+  animation: float 5s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: -1000px 0; }
+  100% { background-position: 1000px 0; }
+}
+
+.animate-shimmer {
+  animation: shimmer 2s infinite linear;
+  background: linear-gradient(to right, #f0f0f0 4%, #e0e0e0 25%, #f0f0f0 36%);
+  background-size: 1000px 100%;
+}
+
+.dark .animate-shimmer {
+  background: linear-gradient(to right, #1a1c1c 4%, #2c2e2e 25%, #1a1c1c 36%);
+  background-size: 1000px 100%;
+}
+
+@keyframes rgb-shimmer {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.text-rgb {
+  @apply bg-clip-text text-transparent;
+  background-image: linear-gradient(
+    to right, 
+    #004343, #006a6a, #004343, #0d5c5c, #004343
+  );
+  background-size: 200% auto;
+  animation: rgb-shimmer 5s ease-in-out infinite;
+}
