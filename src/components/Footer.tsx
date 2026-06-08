@@ -100,7 +100,10 @@ export const Footer = () => {
       </div>
       
       <div className="pt-10 border-t border-outline-variant flex flex-col md:flex-row justify-between items-center gap-6 text-[10px] font-black text-on-surface-variant uppercase tracking-[0.3em]">
-        <p>© 2024 WEBFLOK AGENCY. ALL RIGHTS RESERVED.</p>
+        <div className="flex flex-col items-center md:items-start gap-2">
+          <p>© 2024 WEBFLOK AGENCY. ALL RIGHTS RESERVED.</p>
+          <p className="text-on-surface-variant/70">WEBFLOK IS A PRODUCT OF PINGOS TECHNOLOGIES.</p>
+        </div>
         <div className="flex gap-8">
           <Link className="hover:text-primary" href="/privacy">Privacy Policy</Link>
           <Link className="hover:text-primary" href="#">Terms of Service</Link>
