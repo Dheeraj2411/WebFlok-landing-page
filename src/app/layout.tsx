@@ -55,6 +55,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="h-full antialiased">
       <head>
+        <meta name="facebook-domain-verification" content="p8f6n64x9xsfll1jggioya5czzhz69" />
         <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet" />
         {/* JSON-LD Structured Data for Local Business SEO */}
         <script
