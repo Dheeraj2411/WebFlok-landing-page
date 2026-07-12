@@ -1,21 +1,38 @@
 "use client";
 
-import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
-import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
+import React, { useState, useEffect, useRef } from "react";
 import { BookACallModal } from "./BookACallModal";
+import { Hero3DCarousel } from "./Hero3DCarousel";
+import { HeroBackground } from "./HeroBackground";
 import Link from "next/link";
+import { Button } from "./ui/Button";
+
+const words = [
+  { text: "Growth", icon: "rocket_launch", color: "text-emerald-500" },
+  { text: "Revenue", icon: "payments", color: "text-amber-500" },
+  { text: "Success", icon: "military_tech", color: "text-yellow-500" },
+  { text: "Scale", icon: "trending_up", color: "text-sky-500" },
+  { text: "Impact", icon: "bolt", color: "text-rose-500" },
+];
 
 export const Hero = () => {
   const [isBookModalOpen, setIsBookModalOpen] = useState(false);
-  const words = [
-    { text: "Needs", icon: "lightbulb", color: "text-amber-500" },
-    { text: "Growth", icon: "rocket_launch", color: "text-emerald-500" },
-    { text: "Success", icon: "star", color: "text-yellow-500" },
-    { text: "Future", icon: "auto_awesome", color: "text-sky-500" },
-    { text: "Identity", icon: "person", color: "text-rose-500" }
-  ];
   const [index, setIndex] = useState(0);
+  
+  const containerRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end start"],
+  });
+
+  const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
+  const contentOpacity = useTransform(scrollYProgress, [0, 1], [1, 1]); // Keeping it visible
+  const contentScale = useTransform(scrollYProgress, [0, 1], [1, 0.95]);
+  
+  const carouselY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
+  const carouselRotateX = useTransform(scrollYProgress, [0, 1], [0, 20]);
+  const carouselScale = useTransform(scrollYProgress, [0, 1], [1, 0.8]);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -26,107 +43,105 @@ export const Hero = () => {
 
   return (
     <>
-      <section className="pt-8 pb-20 md:pt-16 md:pb-32 flex flex-col md:flex-row gap-16 items-center overflow-hidden">
-        <motion.div 
-          initial={{ opacity: 0, x: -30 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="md:w-[55%] space-y-10"
+      <section 
+        ref={containerRef}
+        className="relative pt-24 pb-12 md:pt-32 md:pb-16 min-h-svh flex flex-col lg:flex-row gap-8 lg:gap-12 items-center justify-center overflow-hidden perspective-distant"
+      >
+        <HeroBackground />
+        <motion.div
+          style={{ y: contentY, opacity: contentOpacity, scale: contentScale }}
+          initial={{ opacity: 0, x: -30, rotateY: -10 }}
+          whileInView={{ opacity: 1, x: 0, rotateY: 0 }}
+          viewport={{ once: false, amount: 0.1 }}
+          transition={{ duration: 0.8, type: "spring", bounce: 0.4 }}
+          className="lg:w-[55%] space-y-6 md:space-y-8 preserve-3d"
         >
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-secondary-container/30 rounded-full border border-secondary-container">
-            <span className="text-sm">✨</span>
-            <span className="text-xs font-black text-secondary uppercase tracking-[0.2em]">Trusted Startup Partner</span>
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-secondary/5 backdrop-blur-md rounded-full border border-secondary/20 shadow-inner">
+            <span className="text-sm animate-pulse">✨</span>
+            <span className="text-[10px] font-black text-secondary uppercase tracking-[0.3em]">
+              Trusted Startup Partner
+            </span>
           </div>
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-headline font-black text-primary leading-[0.95] mb-8 tracking-tighter text-balance">
-            Building Websites <br className="hidden md:block" />
-            for Your 
-            <div className="relative inline-flex items-center mx-3 align-middle min-w-[220px] md:min-w-[340px] justify-start">
+          <h1 className="text-5xl md:text-7xl lg:text-[84px] font-headline font-black text-primary leading-[0.95] mb-6 tracking-tighter text-balance">
+            Websites that Drive <br className="hidden md:block" />
+            <div className="relative inline-flex items-center ml-2 align-middle min-w-[280px] md:min-w-[400px] justify-start -mt-2">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
+                  initial={{ opacity: 0, y: 30, filter: 'blur(10px)' }}
+                  animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                  exit={{ opacity: 0, y: -30, filter: 'blur(10px)' }}
+                  transition={{ duration: 0.5, type: 'spring', bounce: 0.2 }}
                   className="flex items-center gap-4"
                 >
-                  <span className={`${words[index].color} italic block whitespace-nowrap font-headline text-5xl md:text-7xl lg:text-8xl drop-shadow-sm transition-colors duration-500`}>
+                  <span
+                    className={`${words[index].color} italic block whitespace-nowrap font-headline text-5xl md:text-7xl lg:text-[84px] drop-shadow-lg transition-colors duration-500`}
+                  >
                     {words[index].text}
                   </span>
-                  <span className="material-symbols-outlined text-primary text-5xl md:text-7xl lg:text-8xl font-light">
+                  <span className="material-symbols-outlined text-primary text-5xl md:text-7xl lg:text-[84px] font-light hidden md:block">
                     {words[index].icon}
                   </span>
                 </motion.div>
               </AnimatePresence>
             </div>
-            Business
           </h1>
-          <p className="text-lg md:text-xl lg:text-2xl text-on-surface-variant max-w-xl leading-relaxed font-medium tracking-tight opacity-90 text-balance">
-            Helping startups go online with modern, fast & affordable websites tailored for growth and conversion.
+          <p className="text-xl md:text-2xl text-on-surface-variant max-w-xl leading-relaxed font-medium tracking-tight opacity-90 text-balance">
+            Helping startups go online with modern, fast & affordable websites
+            tailored for growth and conversion.
           </p>
-          <div className="flex flex-wrap gap-4">
-            <button 
-              onClick={() => setIsBookModalOpen(true)}
-              className="bg-primary text-white px-8 py-4 rounded-xl font-bold flex items-center gap-2 hover:bg-secondary hover:scale-105 active:scale-95 transition-all shadow-lg hover:shadow-primary/20 uppercase tracking-wider text-xs"
-            >
-              Book a Call <span className="material-symbols-outlined text-sm">call</span>
-            </button>
-            <Link 
-              href="/quote"
-              className="bg-white border-2 border-primary text-primary px-8 py-4 rounded-xl font-bold hover:bg-primary hover:text-white hover:scale-105 active:scale-95 transition-all shadow-lg hover:shadow-primary/5 uppercase tracking-wider text-xs inline-flex items-center"
-            >
-              Get a Quote →
-            </Link>
+          <div className="flex flex-col gap-8 mt-8">
+            <div className="flex flex-wrap gap-4">
+              <Button
+                onClick={() => setIsBookModalOpen(true)}
+                variant="default"
+                className="group relative overflow-hidden flex items-center gap-2 text-base md:text-lg px-8 py-5 md:py-6 rounded-[24px] bg-primary text-white hover:bg-primary/90 transition-all duration-300 shadow-[0_10px_40px_rgba(30,58,95,0.2)] hover:shadow-[0_15px_50px_rgba(30,58,95,0.3)] hover:-translate-y-1"
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-[200%] group-hover:translate-x-[200%] transition-transform duration-1000 ease-out" />
+                Book a Strategy Call{" "}
+                <span className="material-symbols-outlined text-xl transition-transform group-hover:rotate-12 group-hover:scale-110">call</span>
+              </Button>
+              <Button
+                asChild
+                variant="outline"
+                className="group flex items-center gap-2 text-base md:text-lg px-8 py-5 md:py-6 rounded-[24px] bg-white/50 backdrop-blur-md border border-outline-variant/30 hover:bg-white hover:border-primary/30 transition-all duration-300 shadow-sm hover:shadow-xl hover:-translate-y-1 text-primary"
+              >
+                <Link href="/quote">
+                  Get a Quote 
+                  <span className="transition-transform group-hover:translate-x-1">→</span>
+                </Link>
+              </Button>
+            </div>
+            
+            <div className="flex items-center gap-4 text-on-surface-variant text-sm font-black uppercase tracking-widest">
+              <div className="flex items-center -space-x-2">
+                {[1, 2, 3, 4].map((i) => (
+                  <div key={i} className={`w-10 h-10 rounded-full border-2 border-surface bg-surface-container-high flex items-center justify-center z-[${5-i}]`}>
+                    <span className="material-symbols-outlined text-xl text-primary opacity-50">person</span>
+                  </div>
+                ))}
+              </div>
+              <span>Trusted by 100+ startups</span>
+            </div>
           </div>
         </motion.div>
-        
-        <div className="md:w-[45%] relative h-[600px] hidden lg:flex items-center justify-center">
-          <div className="grid grid-cols-2 gap-6 relative p-4">
-            {[
-              { id: '1460925895917-afdab827c52f', rotate: -6, delay: 0 },
-              { id: '1497366216548-37526070297c', rotate: 4, delay: 0.1 },
-              { id: '1542744173-8e7e53415bb0', rotate: 8, delay: 0.2 },
-              { id: '1551434678-e076c223a692', rotate: -4, delay: 0.3 }
-            ].map((item, i) => (
-              <motion.div 
-                key={i}
-                initial={{ opacity: 0, scale: 0.8, rotate: item.rotate }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                whileHover={{ 
-                  scale: 1.1, 
-                  rotate: 0, 
-                  zIndex: 20,
-                  transition: { duration: 0.3 }
-                }}
-                viewport={{ once: true }}
-                transition={{ delay: item.delay, duration: 0.8, ease: "easeOut" }}
-                className={`relative w-52 h-64 p-2 bg-white shadow-2xl rounded-[32px] border border-outline-variant cursor-pointer overflow-hidden ${
-                  i === 1 ? 'mt-12' : i === 2 ? '-mt-12' : ''
-                }`}
-              >
-                <div className="w-full h-full rounded-[24px] overflow-hidden relative">
-                  <Image 
-                    alt={`WebFlok Portfolio Detail ${i + 1}`}
-                    src={`https://images.unsplash.com/photo-${item.id}?q=80&w=400&h=500&auto=format&fit=crop`}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-              </motion.div>
-            ))}
-            
-            {/* Decorative shapes */}
-            <div className="absolute -top-12 -right-12 w-32 h-32 bg-secondary/10 rounded-full blur-3xl -z-10 animate-pulse"></div>
-            <div className="absolute -bottom-12 -left-12 w-32 h-32 bg-primary/10 rounded-full blur-3xl -z-10 animate-pulse"></div>
-          </div>
-        </div>
+
+        <motion.div 
+          style={{ y: carouselY, scale: carouselScale, rotateX: carouselRotateX }}
+          className="lg:w-[45%] relative h-[400px] lg:h-[500px] hidden lg:flex items-center justify-center preserve-3d"
+        >
+          <Hero3DCarousel />
+          
+          {/* Decorative shapes */}
+          <div className="absolute top-10 right-10 w-72 h-72 bg-secondary/20 rounded-full blur-[80px] -z-10 animate-pulse"></div>
+          <div className="absolute bottom-10 left-10 w-72 h-72 bg-primary/20 rounded-full blur-[80px] -z-10 animate-pulse" style={{ animationDelay: '1s' }}></div>
+        </motion.div>
       </section>
 
-      <BookACallModal 
-        isOpen={isBookModalOpen} 
-        onClose={() => setIsBookModalOpen(false)} 
+      <BookACallModal
+        isOpen={isBookModalOpen}
+        onClose={() => setIsBookModalOpen(false)}
       />
     </>
   );
 };
-

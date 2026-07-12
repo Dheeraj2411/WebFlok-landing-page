@@ -2,112 +2,149 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { cn } from "@/lib/utils";
+import { SectionHeader } from "./ui/SectionHeader";
 
 export const Services = () => {
   const services = [
     {
-      title: "Business Website",
+      title: "Custom Web Development",
       icon: "desktop_windows",
-      desc: "High-performance, custom-built websites designed to convert visitors into loyal customers.",
-      features: ["Next.js & React", "SEO Optimized", "Ultra-Fast Loading"]
+      desc: "High-performance, ultra-fast Next.js websites tailored for conversion and scale.",
+      features: ["Next.js & React", "SEO Optimized", "Ultra-Fast Loading"],
+      className: "md:col-span-2 lg:col-span-2 lg:row-span-2 bg-primary text-white overflow-hidden relative",
+      iconClass: "bg-white/10 text-white",
+      textClass: "text-white/90",
+      titleClass: "text-white",
+      featureClass: "text-secondary border-white/20",
+      featureDot: "bg-secondary/20 text-secondary",
+      watermark: true
     },
     {
-      title: "Social Media Handling",
+      title: "Social Media & Growth",
       icon: "diversity_3",
-      desc: "Complete management of your social profiles to build a consistent and engaging brand voice.",
-      features: ["Account Audit", "Daily Management", "Audience Growth"]
+      desc: "Complete management of your social profiles to build an engaging brand voice.",
+      features: ["Account Audit", "Daily Management", "Audience Growth"],
+      className: "lg:col-span-1 bg-white",
+      iconClass: "bg-primary/5 text-primary",
+      textClass: "text-on-surface-variant",
+      titleClass: "text-primary",
+      featureClass: "text-primary border-outline-variant",
+      featureDot: "bg-primary/10 text-primary",
+      watermark: false
     },
     {
       title: "Content Creation",
       icon: "auto_videocam",
-      desc: "Professional reel production, static graphics, and storytelling that stops the scroll.",
-      features: ["Reel Production", "Graphic Design", "Brand Stories"]
+      desc: "Professional reel production and storytelling.",
+      features: ["Reels", "Graphics"],
+      className: "lg:col-span-1 bg-surface-container-low",
+      iconClass: "bg-primary/5 text-primary",
+      textClass: "text-on-surface-variant",
+      titleClass: "text-primary",
+      featureClass: "text-primary border-outline-variant",
+      featureDot: "bg-primary/10 text-primary",
+      watermark: false
     },
     {
-      title: "End-to-End Marketing",
-      icon: "hub",
-      desc: "Comprehensive marketing funnels designed to capture leads and maximize ROI.",
-      features: ["Lead Generation", "Sales Funnels", "Growth Strategy"]
-    },
-    {
-      title: "E-Commerce Store",
-      icon: "storefront",
-      desc: "Scalable online stores with seamless checkout experiences and robust inventory management.",
-      features: ["Shopify & Custom", "Secure Payments", "UX Optimization"]
-    },
-    {
-      title: "Google Ranking",
+      title: "Google SEO",
       icon: "search_insights",
-      desc: "Advanced SEO strategies to push your business to the first page of search results.",
-      features: ["Keyword Research", "On-Page SEO", "Authority Building"]
+      desc: "Advanced SEO to push you to the first page.",
+      features: ["Keywords", "On-Page"],
+      className: "lg:col-span-1 bg-surface-container-low",
+      iconClass: "bg-primary/5 text-primary",
+      textClass: "text-on-surface-variant",
+      titleClass: "text-primary",
+      featureClass: "text-primary border-outline-variant",
+      featureDot: "bg-primary/10 text-primary",
+      watermark: false
     },
     {
-      title: "Meta & IG Ads",
+      title: "Performance Ads",
       icon: "ads_click",
-      desc: "Targeted advertising campaigns that reach your ideal customers where they spend their time.",
-      features: ["Ad Management", "A/B Testing", "Detailed Analytics"]
-    },
-    {
-      title: "Site Optimization",
-      icon: "rocket_launch",
-      desc: "Technical enhancements to improve your site's speed, security, and conversion rate.",
-      features: ["Core Web Vitals", "Security Audits", "CRO Analysis"]
-    },
+      desc: "Comprehensive marketing funnels and targeted Meta/IG ads that maximize ROI.",
+      features: ["Meta Ads", "A/B Testing", "Sales Funnels"],
+      className: "md:col-span-2 lg:col-span-2 bg-secondary text-primary relative overflow-hidden",
+      iconClass: "bg-primary/10 text-primary",
+      textClass: "text-primary/80",
+      titleClass: "text-primary",
+      featureClass: "text-primary border-primary/20",
+      featureDot: "bg-primary/20 text-primary",
+      watermark: true
+    }
   ];
 
   return (
-    <section id="services" className="py-20 md:py-32 bg-surface scroll-mt-24">
-      <div className="flex flex-col lg:flex-row justify-between items-start mb-20 gap-12">
-        <div className="space-y-6 max-w-2xl">
-          <div className="inline-block px-4 py-1.5 bg-primary/5 rounded-full border border-primary/10">
-            <span className="text-[10px] font-black text-primary uppercase tracking-[0.3em]">Scalable Solutions</span>
-          </div>
-          <h2 className="font-headline text-5xl md:text-7xl font-black text-primary text-balance leading-[1] tracking-tighter">
-            Comprehensive Services <br />
-            for Modern <span className="text-gradient italic font-serif">Success</span>
-          </h2>
+    <section id="services" className="py-24 md:py-32 px-4 md:px-6 relative overflow-hidden">
+      {/* Decorative Glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-secondary/5 blur-[120px] rounded-full pointer-events-none" />
+
+      <div className="max-w-[1400px] mx-auto relative z-10">
+        <div className="flex flex-col lg:flex-row justify-between items-start mb-20 gap-12">
+          <SectionHeader 
+            eyebrow="Scalable Solutions"
+            title={
+              <>
+                Comprehensive Services for <span className="text-transparent bg-clip-text bg-linear-to-r from-primary to-secondary">Growth</span>
+              </>
+            }
+          />
+          <p className="text-on-surface-variant max-w-sm text-lg md:text-xl leading-relaxed text-balance pt-4 lg:pt-12">
+            We provide end-to-end digital excellence that helps startups and local
+            businesses dominate their market.
+          </p>
         </div>
-        <p className="text-on-surface-variant max-w-sm text-base md:text-lg leading-relaxed font-medium opacity-80 text-balance tracking-tight">
-          We provide end-to-end digital excellence that helps startups and local businesses dominate their market.
-        </p>
-      </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {services.map((service, i) => (
-          <motion.div
-            key={i}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: i * 0.05 }}
-            viewport={{ once: true }}
-            whileHover={{ y: -10 }}
-            className="group bg-white p-8 rounded-[24px] border border-outline-variant shadow-sm hover:shadow-xl hover:border-primary/20 transition-all duration-300 flex flex-col h-full"
-          >
-            <div className="w-14 h-14 bg-surface-container rounded-2xl flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-white transition-colors duration-300">
-              <span className="material-symbols-outlined text-3xl font-light">{service.icon}</span>
-            </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 auto-rows-[minmax(280px,auto)]">
+          {services.map((service, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.1, duration: 0.8, ease: "easeOut" }}
+              viewport={{ once: false, amount: 0.2 }}
+              className={`group ${service.className} p-8 md:p-10 rounded-[32px] border border-outline-variant/30 shadow-sm hover:shadow-2xl transition-all duration-500 flex flex-col h-full`}
+            >
+              {/* Massive Watermark Icon for large cards */}
+              {service.watermark && (
+                <span className="material-symbols-outlined absolute -bottom-10 -right-10 text-[200px] md:text-[300px] opacity-5 -rotate-12 pointer-events-none group-hover:scale-110 group-hover:-rotate-6 transition-all duration-700">
+                  {service.icon}
+                </span>
+              )}
 
-            <h3 className="text-xl font-black text-primary mb-4 group-hover:text-secondary transition-colors">
-              {service.title}
-            </h3>
+              <div>
+                <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-8 transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-3 ${service.iconClass}`}>
+                  <span className="material-symbols-outlined text-3xl font-light">
+                    {service.icon}
+                  </span>
+                </div>
 
-            <p className="text-base text-on-surface-variant leading-relaxed mb-8 flex-grow opacity-90">
-              {service.desc}
-            </p>
+                <h3 className={`text-2xl font-black mb-4 ${service.titleClass}`}>
+                  {service.title}
+                </h3>
 
-            <ul className="space-y-4 pt-6 border-t border-outline-variant">
-              {service.features.map((feature, idx) => (
-                <li key={idx} className="flex items-center gap-3 text-[12px] font-black text-secondary uppercase tracking-[0.1em]">
-                  <div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                    <span className="material-symbols-outlined text-[14px] font-black text-primary">done</span>
-                  </div>
-                  {feature}
-                </li>
-              ))}
-            </ul>
-          </motion.div>
-        ))}
+                <p className={`text-base md:text-lg leading-relaxed mb-10 ${service.textClass} relative z-10`}>
+                  {service.desc}
+                </p>
+              </div>
+
+              <ul className={`space-y-4 pt-6 mt-8 border-t relative z-10 ${service.featureClass}`}>
+                {service.features.map((feature, idx) => (
+                  <li
+                    key={idx}
+                    className="flex items-center gap-3 text-xs font-black uppercase tracking-widest"
+                  >
+                    <div className={`w-6 h-6 rounded-full flex items-center justify-center shrink-0 ${service.featureDot}`}>
+                      <span className="material-symbols-outlined text-[14px] font-black">
+                        done
+                      </span>
+                    </div>
+                    {feature}
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+          ))}
+        </div>
       </div>
     </section>
   );
